@@ -33,7 +33,7 @@ const ItemListContainer = () => {
                     {producto.descripcion}
                     </Card.Text>
                     <Card.Text>
-                    {producto.precio}
+                    ${producto.precio}
                     </Card.Text>
                     <Button variant="primary"><Link to={`item/${producto.id}`} className="link">Ver detalles</Link></Button>
                 </Card.Body>
@@ -56,7 +56,7 @@ const ItemListContainer = () => {
                     {producto.descripcion}
                     </Card.Text>
                     <Card.Text>
-                    {producto.precio}
+                    ${producto.precio}
                     </Card.Text>
                     <Button variant="primary"><Link to={`item/${producto.id}`} className="link">Ver detalles</Link></Button>
                 </Card.Body>

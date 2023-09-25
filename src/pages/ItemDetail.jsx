@@ -29,7 +29,7 @@ const ItemDetail = () => {
                         {item.descripcion}
                         </Card.Text>
                         <Card.Text>
-                        {item.precio}
+                        ${item.precio}
                         </Card.Text>
                         <Button variant="primary">Añadir al carrito</Button>
                     </Card.Body>
