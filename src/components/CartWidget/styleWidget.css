@@ -1,0 +1,13 @@
+.carrito {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    width: 40px;
+}
+.numero {
+    color: white;
+}
+.imagen {
+    width: 100%;
+}

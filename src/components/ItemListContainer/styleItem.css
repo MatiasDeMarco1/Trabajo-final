@@ -1,0 +1,14 @@
+img {
+    width: 200px;
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+}
+
+.listado {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(5,1fr);
+}
