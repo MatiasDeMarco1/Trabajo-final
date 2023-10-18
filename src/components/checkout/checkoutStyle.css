@@ -1,0 +1,17 @@
+.container-finalizar {
+    display: flex;
+    justify-content: center;
+}
+.formulario {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+.formulario input {
+    margin-bottom: 10px;
+}
+
+.container-gracias {
+    text-align: center;
+    margin-top: 40px;
+}

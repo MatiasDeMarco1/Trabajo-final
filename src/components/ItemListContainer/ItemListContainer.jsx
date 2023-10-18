@@ -1,78 +1,37 @@
-import "./styleItem.css"
-import { useEffect, useState } from 'react'
-import { productos } from "../../productos"
-import { Link, useParams } from "react-router-dom"
-import NavBar from "../navbar/NavBar"
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import "bootstrap/dist/css/bootstrap.min.css"
-
+import { useEffect, useState } from "react";
+import ItemList from "../itemList/ItemList";
+import { useParams } from "react-router-dom";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 const ItemListContainer = () => {
-    let listado = []
-    const {ide} = useParams()
-    if (ide == undefined){
-        const [products, setProducts] = useState([])
-        const getData = async () => {
-            return await new Promise((resolve) => {
-                setTimeout(()=>{
-                resolve(productos)
-                }, 2000)
+
+    const [productos, setProductos] = useState([]);
+    const categoria = useParams().categoria;
+
+    useEffect(() => {
+
+      const productosRef = collection(db, "productos");
+      const q = categoria ? query(productosRef, where("categoria", "==", categoria)) : productosRef;
+
+      getDocs(q)
+        .then((resp) => {
+
+          setProductos(
+            resp.docs.map((doc) => {
+              return { ...doc.data(), id: doc.id }
             })
-        }
-        useEffect(() => {
-            getData()
-            .then(res => setProducts(res))
-        }, [])
-        listado = productos.map(producto => (
-            <Card style={{ width: '18rem' }} key={producto.id}>
-                <Card.Img variant="top" src={producto.imagen} />
-                <Card.Body>
-                    <Card.Title>{producto.nombre}</Card.Title>
-                    <Card.Text>
-                    {producto.descripcion}
-                    </Card.Text>
-                    <Card.Text>
-                    ${producto.precio}
-                    </Card.Text>
-                    <Button variant="primary"><Link to={`item/${producto.id}`} className="link">Ver detalles</Link></Button>
-                </Card.Body>
-            </Card>
-        ))
-    }else {
-        const [Category, setItem] = useState({})
-        const buscoCat = productos.filter((prod) => prod.categoria === ide)
-        useEffect(() => {
-            setTimeout(() => {
-                setItem(buscoCat)
-            }, 1000)
+          )
         })
-        listado = buscoCat.map(producto => (
-            <Card style={{ width: '18rem'}} key={producto.id} className="carta">
-                <Card.Img variant="top" src={producto.imagen} />
-                <Card.Body>
-                    <Card.Title>{producto.nombre}</Card.Title>
-                    <Card.Text>
-                    {producto.descripcion}
-                    </Card.Text>
-                    <Card.Text>
-                    ${producto.precio}
-                    </Card.Text>
-                    <Button variant="primary"><Link to={`item/${producto.id}`} className="link">Ver detalles</Link></Button>
-                </Card.Body>
-            </Card>
-        ))
-    }
-    return (
-        <>
-            <NavBar/>
-            <div className="listado">
-                {
-                listado
-                }
-            </div>
-        </>
-    )
+        
+    }, [categoria])
+    
+    
+  return (
+    <div >
+        <ItemList productos={productos} />
+    </div>
+  )
 }
 
 export default ItemListContainer
